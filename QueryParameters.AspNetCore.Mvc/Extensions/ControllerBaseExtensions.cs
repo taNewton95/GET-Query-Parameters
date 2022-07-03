@@ -10,9 +10,9 @@ namespace QueryParameters.AspNetCore.Mvc.Extensions
     public static class ControllerBaseExtensions
     {
 
-        public static IQueryable<T> ApplyGetQueryParameters<T>(this ControllerBase controllerBase, IQueryable<T> items)
+        public static IQueryable<T> ApplyQueryParameters<T>(this ControllerBase controllerBase, IQueryable<T> items)
         {
-            return ParameterFactory.Handler<T>(controllerBase.Request).Apply(items);
+            return SyntaxFactory.Handler<T>(controllerBase.Request).Apply(items);
         }
 
     }

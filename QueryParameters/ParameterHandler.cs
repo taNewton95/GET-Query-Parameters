@@ -11,10 +11,12 @@ namespace QueryParameters
     {
 
         public PaginationParameter Pagination { get; set; }
+        public IEnumerable<SortParameter> Sort { get; set; }
 
         public IQueryable<T> Apply(IQueryable<T> queryable)
         {
             queryable = ApplyPagination(queryable);
+            queryable = ApplySort(queryable);
 
             return queryable;
         }
@@ -32,6 +34,15 @@ namespace QueryParameters
             {
                 queryable = queryable.Take(Pagination.Take);
             }
+
+            return queryable;
+        }
+
+        public IQueryable<T> ApplySort(IQueryable<T> queryable)
+        {
+            if (Sort == null || !Sort.Any()) return queryable;
+
+            
 
             return queryable;
         }

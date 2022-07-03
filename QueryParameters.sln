@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryParameters", "QueryParameters\QueryParameters.csproj", "{8E21DE85-1F99-4BC4-8DEB-71EA187B066F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryParameters", "QueryParameters\QueryParameters.csproj", "{8E21DE85-1F99-4BC4-8DEB-71EA187B066F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryParameters.AspNetCore.Mvc", "QueryParameters.AspNetCore.Mvc\QueryParameters.AspNetCore.Mvc.csproj", "{6F798F01-F85B-4630-B67B-D09B959180F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryParameters.AspNetCore.Mvc", "QueryParameters.AspNetCore.Mvc\QueryParameters.AspNetCore.Mvc.csproj", "{6F798F01-F85B-4630-B67B-D09B959180F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{73F55082-3E60-4EFB-A110-F14A1AB1B73F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryParameters", "Test\QueryParameters\QueryParameters.csproj", "{93F81E3F-362A-4D3A-B2A6-82CB1A5947E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryParameters.Tests", "Test\QueryParameters\QueryParameters.Tests.csproj", "{93F81E3F-362A-4D3A-B2A6-82CB1A5947E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryParameters.AspNetCore.Mvc.Tests", "Test\QueryParameters.AspNetCore.Mvc\QueryParameters.AspNetCore.Mvc.Tests.csproj", "{57BDD691-562C-4E98-8A7D-A92C6BF546FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,12 +31,17 @@ Global
 		{93F81E3F-362A-4D3A-B2A6-82CB1A5947E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93F81E3F-362A-4D3A-B2A6-82CB1A5947E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93F81E3F-362A-4D3A-B2A6-82CB1A5947E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57BDD691-562C-4E98-8A7D-A92C6BF546FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57BDD691-562C-4E98-8A7D-A92C6BF546FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57BDD691-562C-4E98-8A7D-A92C6BF546FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57BDD691-562C-4E98-8A7D-A92C6BF546FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{93F81E3F-362A-4D3A-B2A6-82CB1A5947E5} = {73F55082-3E60-4EFB-A110-F14A1AB1B73F}
+		{57BDD691-562C-4E98-8A7D-A92C6BF546FA} = {73F55082-3E60-4EFB-A110-F14A1AB1B73F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CC907E1-346B-4773-B13B-C7E24278B493}

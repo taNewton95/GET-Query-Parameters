@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QueryParameters.Settings;
 
 namespace QueryParameters.Parameters
 {
     public class PaginationParameter : BaseParameter
     {
 
-        public int Take;
-        public int Skip;
+        public int Take = PaginationSettings.Default.DefaultTake;
+        public int Skip = PaginationSettings.Default.DefaultSkip;
 
         public override bool IsPopulated()
         {
