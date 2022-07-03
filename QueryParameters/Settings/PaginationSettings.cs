@@ -12,8 +12,8 @@ namespace QueryParameters.Settings
             DefaultTake = 0,
         };
 
-        public int DefaultTake;
-        public int DefaultSkip;
+        public int DefaultTake = Default?.DefaultTake ?? 0; // Null handler for the constructor for default settings, set to arbitrary value, this should be set post constructor by the initialiser.
+        public int DefaultSkip = Default?.DefaultSkip ?? 0; // Null handler for the constructor for default settings, set to arbitrary value, this should be set post constructor by the initialiser.
 
         public object Clone()
         {

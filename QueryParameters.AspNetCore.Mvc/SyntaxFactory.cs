@@ -22,13 +22,20 @@ namespace QueryParameters.AspNetCore.Mvc
         }
 
         public static PaginationParameter Pagination(HttpRequest httpRequest, PaginationSettings paginationSettings = null)
+        {           
+            return Pagination(httpRequest.Query, paginationSettings: paginationSettings);
+        }
+
+        public static PaginationParameter Pagination(IQueryCollection queryCollection, PaginationSettings paginationSettings = null)
         {
             // Use the default settings if not overridden
             paginationSettings ??= PaginationSettings.Default;
 
             var newInstance = new PaginationParameter();
+            newInstance.Skip = paginationSettings.DefaultSkip;
+            newInstance.Take = paginationSettings.DefaultTake;
 
-            var skip = httpRequest.Query[SyntaxSettings.PaginationSkipName];
+            var skip = queryCollection[SyntaxSettings.PaginationSkipName];
             if (skip.Count > 0)
             {
                 if (!int.TryParse(skip[0], out newInstance.Skip))
@@ -37,7 +44,7 @@ namespace QueryParameters.AspNetCore.Mvc
                 }
             }
 
-            var take = httpRequest.Query[SyntaxSettings.PaginationTakeName];
+            var take = queryCollection[SyntaxSettings.PaginationTakeName];
             if (take.Count > 0)
             {
                 if (!int.TryParse(take[0], out newInstance.Take))

@@ -94,9 +94,7 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
         {
             var fieldName = "Settings";
 
-            var strValues = new StringValues(fieldName + SyntaxSettings.OperatorDelimiter + "test");
-
-            var sortParams = QueryParameters.AspNetCore.Mvc.SyntaxFactory.Sort(strValues);
+            var sortParams = BasicSortChecks(fieldName + SyntaxSettings.OperatorDelimiter + "test");
 
             var firstVal = sortParams.First();
 
