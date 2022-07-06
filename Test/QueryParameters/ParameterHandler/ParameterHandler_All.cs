@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QueryParameters.Entities;
 using QueryParameters.Parameters;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace QueryParameters.Tests.ParameterHandler
                     new SortParameter()
                     {
                         Field = "Index",
-                        Direction = Settings.SortDirection.Descending,
+                        Direction = SortDirection.Descending,
                     },
                 }
             };

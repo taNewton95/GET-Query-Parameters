@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QueryParameters.AspNetCore.Mvc.Settings;
+using QueryParameters.Entities;
 using QueryParameters.Parameters;
 using QueryParameters.Settings;
 using System;
@@ -42,6 +43,19 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
 
         [TestMethod]
         public void Sort_Descending()
+        {
+            var fieldName = "Descending";
+
+            var sortParams = BasicSortChecks(fieldName + SyntaxSettings.OperatorDelimiter + SyntaxSettings.SortDescendingOperator);
+
+            var firstVal = sortParams.First();
+
+            Assert.AreEqual(fieldName, firstVal.Field);
+            Assert.AreEqual(SortDirection.Descending, firstVal.Direction);
+        }
+
+        [TestMethod]
+        public void Sort_Multiple()
         {
             var fieldName = "Descending";
 

@@ -1,8 +1,10 @@
-﻿using QueryParameters.Parameters;
+﻿using QueryParameters.Entities;
+using QueryParameters.Parameters;
 using QueryParameters.Properties;
 using QueryParameters.Settings;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -10,37 +12,9 @@ using System.Threading.Tasks;
 
 namespace QueryParameters
 {
-    public class ParameterHandler<T>
+    public partial class ParameterHandler<T>
     {
-
-        public PaginationParameter Pagination { get; set; }
-        public IEnumerable<SortParameter> Sort { get; set; }
-
-        public IQueryable<T> Apply(IQueryable<T> queryable)
-        {
-            queryable = ApplySort(queryable);
-            queryable = ApplyPagination(queryable);
-
-            return queryable;
-        }
-
-        public IQueryable<T> ApplyPagination(IQueryable<T> queryable)
-        {
-            if (Pagination == null || !Pagination.IsPopulated()) return queryable;
-
-            if (Pagination.Skip > 0)
-            {
-                queryable = queryable.Skip(Pagination.Skip);
-            }
-
-            if (Pagination.Take > 0)
-            {
-                queryable = queryable.Take(Pagination.Take);
-            }
-
-            return queryable;
-        }
-
+        
         public IQueryable<T> ApplySort(IQueryable<T> queryable)
         {
             if (Sort == null || !Sort.Any()) return queryable;

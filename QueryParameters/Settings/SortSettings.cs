@@ -1,5 +1,5 @@
 using System;
-using QueryParameters.Parameters;
+using QueryParameters.Entities;
 
 namespace QueryParameters.Settings
 {

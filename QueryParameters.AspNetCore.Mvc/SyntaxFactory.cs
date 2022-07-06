@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using QueryParameters.AspNetCore.Mvc.Settings;
+using QueryParameters.Entities;
 using QueryParameters.Parameters;
 using QueryParameters.Settings;
 
@@ -19,6 +20,20 @@ namespace QueryParameters.AspNetCore.Mvc
                 Pagination = Pagination(httpRequest, paginationSettings: paginationSettings),
                 Sort = Sort(httpRequest, sortSettings: sortSettings),
             };
+        }
+
+        public static FilterParameter Filter(HttpRequest httpRequest)
+        {
+            return Filter(httpRequest.Query);
+        }
+
+        public static FilterParameter Filter(IQueryCollection queryCollection)
+        {
+            var newInstance = new FilterParameter();
+
+            
+
+            return newInstance;
         }
 
         public static PaginationParameter Pagination(HttpRequest httpRequest, PaginationSettings paginationSettings = null)
@@ -102,11 +117,11 @@ namespace QueryParameters.AspNetCore.Mvc
         {
             if (sortOperator.Equals(SyntaxSettings.SortAscendingOperator, StringComparison.CurrentCultureIgnoreCase))
             {
-                return QueryParameters.Settings.SortDirection.Ascending;
+                return QueryParameters.Entities.SortDirection.Ascending;
             }
             else if (sortOperator.Equals(SyntaxSettings.SortDescendingOperator, StringComparison.CurrentCultureIgnoreCase))
             {
-                return QueryParameters.Settings.SortDirection.Descending;
+                return QueryParameters.Entities.SortDirection.Descending;
             }
             else
             {

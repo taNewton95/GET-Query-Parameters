@@ -1,4 +1,5 @@
 
+using QueryParameters.Entities;
 using QueryParameters.Settings;
 
 namespace QueryParameters.Parameters
