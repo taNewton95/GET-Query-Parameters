@@ -16,7 +16,7 @@ namespace QueryParameters
     {
 
         public FilterParameter Filter { get; set; }
-        public IEnumerable<SortParameter> Sort { get; set; }
+        public SortParameter Sort { get; set; }
         public PaginationParameter Pagination { get; set; }
 
         public IQueryable<T> Apply(IQueryable<T> queryable)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QueryParameters.Entities;
 using QueryParameters.Parameters;
 using QueryParameters.Settings;
 using System;
@@ -35,13 +36,9 @@ namespace QueryParameters.Tests.ParameterHandler
 
             parameterHandler.Filter = new FilterParameter();
 
-            var filterIdentifier = new FilterElementIdentifier("Index");
+            var filterIdentifier = new IdentifierElement("Index");
 
-            parameterHandler.Filter.Elements.Add(new FilterElementExpression(filterIdentifier, FilterElementCondition.LessThan, new FilterElementValue(10)));
-
-            parameterHandler.Filter.Elements.Add(FilterElementOperator.And);
-
-            parameterHandler.Filter.Elements.Add(new FilterElementExpression(filterIdentifier, FilterElementCondition.GreaterThan, new FilterElementValue(5)));
+            parameterHandler.Filter.Elements.Add(new FilterElementExpression(filterIdentifier, FilterElementCondition.Equal, new FilterElementValue(5)));
 
             var paginatedResult = parameterHandler.ApplyFilter(data);
 

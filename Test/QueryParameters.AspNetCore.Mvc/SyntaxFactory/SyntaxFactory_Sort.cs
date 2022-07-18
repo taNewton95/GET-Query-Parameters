@@ -38,7 +38,7 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
             var firstVal = sortParams.First();
 
             Assert.AreEqual(fieldName, firstVal.Field);
-            Assert.AreEqual(SortDirection.Ascending, firstVal.Direction);
+            Assert.AreEqual(SortOperator.Ascending, firstVal.Direction);
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
             var firstVal = sortParams.First();
 
             Assert.AreEqual(fieldName, firstVal.Field);
-            Assert.AreEqual(SortDirection.Descending, firstVal.Direction);
+            Assert.AreEqual(SortOperator.Descending, firstVal.Direction);
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
             var firstVal = sortParams.First();
 
             Assert.AreEqual(fieldName, firstVal.Field);
-            Assert.AreEqual(SortDirection.Descending, firstVal.Direction);
+            Assert.AreEqual(SortOperator.Descending, firstVal.Direction);
         }
 
         private IEnumerable<SortParameter> BasicSortChecks(string input)
@@ -92,7 +92,7 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
         public void Sort_ChangeSettings()
         {
             var settings = (SortSettings)SortSettings.Default.Clone();
-            settings.DefaultDirection = SortDirection.Descending;
+            settings.DefaultDirection = SortOperator.Descending;
 
             var strValues = new StringValues("Settings");
 

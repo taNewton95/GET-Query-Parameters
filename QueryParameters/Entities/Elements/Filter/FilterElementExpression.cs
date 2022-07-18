@@ -1,15 +1,15 @@
 using QueryParameters.Entities;
 
-namespace QueryParameters.Parameters
+namespace QueryParameters.Entities
 {
     public class FilterElementExpression : FilterElement
     {
 
-        public readonly FilterElementIdentifier Identifier;
+        public readonly IdentifierElement Identifier;
         public readonly FilterElementCondition Condition;
         public readonly FilterElementValue Value;
 
-        public FilterElementExpression(FilterElementIdentifier identifier, FilterElementCondition condition, FilterElementValue value)
+        public FilterElementExpression(IdentifierElement identifier, FilterElementCondition condition, FilterElementValue value)
         {
             Identifier = identifier;
             Condition = condition;

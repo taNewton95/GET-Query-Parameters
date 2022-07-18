@@ -1,7 +1,7 @@
 using QueryParameters.Entities;
 using QueryParameters.Settings;
 
-namespace QueryParameters.Parameters
+namespace QueryParameters.Entities
 {
     public class FilterElementOperator : FilterElement
     {

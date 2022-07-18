@@ -13,7 +13,7 @@ namespace QueryParameters.Parameters
 
         public override bool IsPopulated()
         {
-            return Elements != null && Elements.Any();
+            return Elements.Any();
         }
 
     }

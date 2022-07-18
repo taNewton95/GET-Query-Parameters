@@ -8,10 +8,10 @@ namespace QueryParameters.Settings
 
         public static readonly SortSettings Default = new SortSettings()
         {
-            DefaultDirection = SortDirection.Ascending
+            DefaultDirection = SortOperator.Ascending
         };
 
-        public SortDirection DefaultDirection = SortSettings.Default?.DefaultDirection ?? SortDirection.Ascending; // Null handler for the constructor for default settings, set to arbitrary value, this should be set post constructor by the initialiser.
+        public SortOperator DefaultDirection = SortSettings.Default?.DefaultDirection ?? SortOperator.Ascending; // Null handler for the constructor for default settings, set to arbitrary value, this should be set post constructor by the initialiser.
 
         public object Clone()
         {

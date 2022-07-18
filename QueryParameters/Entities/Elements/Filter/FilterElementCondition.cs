@@ -1,6 +1,6 @@
 using QueryParameters.Entities;
 
-namespace QueryParameters.Parameters
+namespace QueryParameters.Entities
 {
     public class FilterElementCondition
     {
@@ -15,7 +15,7 @@ namespace QueryParameters.Parameters
         public static readonly FilterElementCondition In = new(Constant.In);
         public static readonly FilterElementCondition NotIn = new(Constant.NotIn);
 
-        private readonly Constant _Constant;
+        internal readonly Constant _Constant;
 
         private FilterElementCondition(Constant constant)
         {
@@ -39,7 +39,7 @@ namespace QueryParameters.Parameters
             };
         }
 
-        private enum Constant
+        internal enum Constant
         {
             Equal,
             NotEqual,

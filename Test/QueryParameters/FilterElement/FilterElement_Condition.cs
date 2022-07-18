@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QueryParameters.Entities;
 using QueryParameters.Parameters;
 using System;
 using System.Collections.Generic;

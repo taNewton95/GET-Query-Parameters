@@ -1,8 +1,9 @@
 namespace QueryParameters.Entities
 {
-    public enum SortDirection
+    public enum SortOperator
     {
         Ascending,
         Descending,
+        Length,
     }
 }

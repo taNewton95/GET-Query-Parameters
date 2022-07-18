@@ -113,15 +113,15 @@ namespace QueryParameters.AspNetCore.Mvc
             return sortParameters;
         }
 
-        public static SortDirection? SortDirection(string sortOperator)
+        public static SortOperator? SortDirection(string sortOperator)
         {
             if (sortOperator.Equals(SyntaxSettings.SortAscendingOperator, StringComparison.CurrentCultureIgnoreCase))
             {
-                return QueryParameters.Entities.SortDirection.Ascending;
+                return QueryParameters.Entities.SortOperator.Ascending;
             }
             else if (sortOperator.Equals(SyntaxSettings.SortDescendingOperator, StringComparison.CurrentCultureIgnoreCase))
             {
-                return QueryParameters.Entities.SortDirection.Descending;
+                return QueryParameters.Entities.SortOperator.Descending;
             }
             else
             {

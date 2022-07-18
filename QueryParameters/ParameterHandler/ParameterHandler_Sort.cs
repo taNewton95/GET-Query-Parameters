@@ -14,97 +14,101 @@ namespace QueryParameters
 {
     public partial class ParameterHandler<T>
     {
-        
+
+        public ISortHandler AscHandler = new DefaultAscHandler();
+
         public IQueryable<T> ApplySort(IQueryable<T> queryable)
         {
-            if (Sort == null || !Sort.Any()) return queryable;
+            if (Sort == null || !Sort.Elements.Any()) return queryable;
 
             IOrderedQueryable<T> orderedQueryable = null;
 
-            foreach (var item in Sort)
+            foreach (var item in Sort.Elements)
             {
-                var fieldType = PropertyFactory.FieldOrPropertyType<T>(item.Field);
 
-                if (fieldType == null) continue;
 
-                void ApplySort_Internal<TMember>()
-                {
-                    if (orderedQueryable == null)
-                    {
-                        orderedQueryable = ApplySort(queryable, PropertyFactory.FieldOrPropertyExpression<T, TMember>(item.Field), item.Direction);
-                    }
-                    else
-                    {
-                        orderedQueryable = ApplySort(orderedQueryable, PropertyFactory.FieldOrPropertyExpression<T, TMember>(item.Field), item.Direction);
-                    }
+                //var fieldType = PropertyFactory.FieldOrPropertyType<T>(item.Identifier.Identifier);
 
-                    queryable = orderedQueryable;
-                }
+                //if (fieldType == null) continue;
 
-                var @switch = new Dictionary<Type, Action> {
-                    { typeof(short), ApplySort_Internal<short> },
-                    { typeof(short?), ApplySort_Internal<short?> },
-                    { typeof(int), ApplySort_Internal<int> },
-                    { typeof(int?), ApplySort_Internal<int?> },
-                    { typeof(long), ApplySort_Internal<long> },
-                    { typeof(long?), ApplySort_Internal<long?> },
-                    { typeof(decimal), ApplySort_Internal<decimal> },
-                    { typeof(decimal?), ApplySort_Internal<decimal?> },
-                    { typeof(double), ApplySort_Internal<double> },
-                    { typeof(double?), ApplySort_Internal<double?> },
-                    { typeof(float), ApplySort_Internal<float> },
-                    { typeof(float?), ApplySort_Internal<float?> },
-                    { typeof(bool), ApplySort_Internal<bool> },
-                    { typeof(bool?), ApplySort_Internal<bool?> },
-                    { typeof(string), ApplySort_Internal<string> },
-                    { typeof(DateTime), ApplySort_Internal<DateTime> },
-                    { typeof(DateTime?), ApplySort_Internal<DateTime?> },
-                };
+                //void ApplySort_Internal<TMember>()
+                //{
+                //    if (orderedQueryable == null)
+                //    {
+                //        orderedQueryable = ApplySort(queryable, PropertyFactory.FieldOrPropertyExpression<T, TMember>(item.Identifier.Identifier), item.Direction);
+                //    }
+                //    else
+                //    {
+                //        orderedQueryable = ApplySort(orderedQueryable, PropertyFactory.FieldOrPropertyExpression<T, TMember>(item.Identifier.Identifier), item.Direction);
+                //    }
 
-                if (@switch.TryGetValue(fieldType, out var action))
-                {
-                    action();
-                }
-                else
-                {
-                    throw new NotSupportedException($"Sort on type '{fieldType}' not supported");
-                }
+                //    queryable = orderedQueryable;
+                //}
+
+                //var @switch = new Dictionary<Type, Action> {
+                //    { typeof(short), ApplySort_Internal<short> },
+                //    { typeof(short?), ApplySort_Internal<short?> },
+                //    { typeof(int), ApplySort_Internal<int> },
+                //    { typeof(int?), ApplySort_Internal<int?> },
+                //    { typeof(long), ApplySort_Internal<long> },
+                //    { typeof(long?), ApplySort_Internal<long?> },
+                //    { typeof(decimal), ApplySort_Internal<decimal> },
+                //    { typeof(decimal?), ApplySort_Internal<decimal?> },
+                //    { typeof(double), ApplySort_Internal<double> },
+                //    { typeof(double?), ApplySort_Internal<double?> },
+                //    { typeof(float), ApplySort_Internal<float> },
+                //    { typeof(float?), ApplySort_Internal<float?> },
+                //    { typeof(bool), ApplySort_Internal<bool> },
+                //    { typeof(bool?), ApplySort_Internal<bool?> },
+                //    { typeof(string), ApplySort_Internal<string> },
+                //    { typeof(DateTime), ApplySort_Internal<DateTime> },
+                //    { typeof(DateTime?), ApplySort_Internal<DateTime?> },
+                //};
+
+                //if (@switch.TryGetValue(fieldType, out var action))
+                //{
+                //    action();
+                //}
+                //else
+                //{
+                //    throw new NotSupportedException($"Sort on type '{fieldType}' not supported");
+                //}
             }
 
             return queryable;
         }
 
-        public IOrderedQueryable<T> ApplySort<TMember>(IQueryable<T> queryable, Expression<Func<T, TMember>> expression, SortDirection direction)
-        {
-            if (direction == SortDirection.Ascending)
-            {
-                return queryable.OrderBy(expression);
-            }
-            else if (direction == SortDirection.Descending)
-            {
-                return queryable.OrderByDescending(expression);
-            }
-            else
-            {
-                throw new NotSupportedException($"Sort direction {direction} not supported");
-            }
-        }
+        //public IOrderedQueryable<T> ApplySort<TMember>(IQueryable<T> queryable, Expression<Func<T, TMember>> expression, SortElementDirection direction)
+        //{
+        //    switch (direction._Constant)
+        //    {
+        //        case SortElementDirection.Constant.Ascending:
+        //            break;
 
-        public IOrderedQueryable<T> ApplySort<TMember>(IOrderedQueryable<T> queryable, Expression<Func<T, TMember>> expression, SortDirection direction)
-        {
-            if (direction == SortDirection.Ascending)
-            {
-                return queryable.ThenBy(expression);
-            }
-            else if (direction == SortDirection.Descending)
-            {
-                return queryable.ThenByDescending(expression);
-            }
-            else
-            {
-                throw new NotSupportedException($"Sort direction {direction} not supported");
-            }
-        }
+        //        case SortElementDirection.Constant.Descending:
+        //            break;
+
+        //        default:
+        //            throw new NotSupportedException($"Sort direction {direction} not supported");
+
+        //    }
+        //}
+
+        //public IOrderedQueryable<T> ApplySort<TMember>(IOrderedQueryable<T> queryable, Expression<Func<T, TMember>> expression, SortElementDirection direction)
+        //{
+        //    if (direction == SortOperator.Ascending)
+        //    {
+        //        return queryable.ThenBy(expression);
+        //    }
+        //    else if (direction == SortOperator.Descending)
+        //    {
+        //        return queryable.ThenByDescending(expression);
+        //    }
+        //    else
+        //    {
+        //        throw new NotSupportedException($"Sort direction {direction} not supported");
+        //    }
+        //}
 
     }
 }

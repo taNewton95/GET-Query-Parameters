@@ -6,7 +6,7 @@ using QueryParameters.Entities;
 using System.Text;
 using QueryParameters.Entities.Exceptions;
 
-namespace QueryParameters.Parameters
+namespace QueryParameters.Entities
 {
     public class FilterElementCollection : FilterElement, IEnumerable<FilterElement>
     {
@@ -17,6 +17,11 @@ namespace QueryParameters.Parameters
         /// Whether the element collection is currently active in scope. I.e. <see cref="EndScope"/> has not yet been called on this collection.
         /// </summary>
         private bool IsInActiveScope = true;
+
+        public FilterElement this[int i]
+        {
+            get => ChildElements[i];
+        }
 
         public FilterElementCollection()
         {

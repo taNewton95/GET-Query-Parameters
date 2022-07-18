@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QueryParameters.Entities.Exceptions
 {
-    public class NoElementsException : Exception
+    public class NoElementsException : QueryParameterException
     {
 
         public NoElementsException() : base()

@@ -1,18 +1,17 @@
-
 using QueryParameters.Entities;
 using QueryParameters.Settings;
+using System.Linq;
 
 namespace QueryParameters.Parameters
 {
     public class SortParameter : BaseParameter
     {
 
-        public SortDirection Direction = SortSettings.Default.DefaultDirection;
-        public string Field;
+        public readonly SortElementCollection Elements = new();
 
         public override bool IsPopulated()
         {
-            return !string.IsNullOrEmpty(Field);
+            return Elements.Any();
         }
 
     }
