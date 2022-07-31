@@ -11,7 +11,7 @@ namespace QueryParameters.AspNetCore.Mvc.Parsers
 
         public readonly string InputString;
 
-        private int LastMatchIndex = -1, IterationIndex = 0;
+        private int LastMatchIndex = 0, IterationIndex = 0;
 
         public string CurrentString { get; private set; }
         public char? MatchedChar { get; private set; }
@@ -38,11 +38,10 @@ namespace QueryParameters.AspNetCore.Mvc.Parsers
 
                 if (delimiters.Contains(currentChar))
                 {
-                    var calculatedLastMatchIndex = Math.Max(LastMatchIndex, 0);
+                    MatchedChar = currentChar;
+                    CurrentString = InputString.Substring(LastMatchIndex, IterationIndex - 1 - LastMatchIndex);
 
                     LastMatchIndex = IterationIndex;
-                    MatchedChar = currentChar;
-                    CurrentString = InputString.Substring(calculatedLastMatchIndex, IterationIndex - 1 - calculatedLastMatchIndex);
 
                     if (!string.IsNullOrEmpty(CurrentString))
                     {

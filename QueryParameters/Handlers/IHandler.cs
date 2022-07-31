@@ -11,47 +11,31 @@ namespace QueryParameters.Handlers
     public interface IHandler
     {
 
-        private static ConcurrentDictionary<Type, ConcurrentDictionary<string, Expression>> _PropertyFieldExpressionCache = new();
-
         internal Expression GetPropertyFieldExpression<T>(string identifier, ParameterExpression parameterExpression)
         {
             var genericTypeArg = typeof(T);
 
-            Expression propertyFieldExpression;
+            Expression propertyFieldExpression = null;
 
-            // Populate the entry for the concurrent dictionary if not already populated
-            if (!_PropertyFieldExpressionCache.TryGetValue(genericTypeArg, out var propertyFieldCache))
+            var property = genericTypeArg.GetProperty(identifier);
+
+            if (property != null)
             {
-                propertyFieldCache = new();
-                _PropertyFieldExpressionCache.TryAdd(genericTypeArg, propertyFieldCache);
+                propertyFieldExpression = Expression.Property(parameterExpression, identifier);
+            }
+            else
+            {
+                var field = genericTypeArg.GetField(identifier);
+
+                if (field != null)
+                {
+                    propertyFieldExpression = Expression.Field(parameterExpression, identifier);
+                }
             }
 
-            if (!propertyFieldCache.TryGetValue(identifier, out propertyFieldExpression))
+            if (propertyFieldExpression == null)
             {
-                var property = genericTypeArg.GetProperty(identifier);
-
-                if (property != null)
-                {
-                    propertyFieldExpression = Expression.Property(parameterExpression, identifier);
-                }
-                else
-                {
-                    var field = genericTypeArg.GetField(identifier);
-
-                    if (field != null)
-                    {
-                        propertyFieldExpression = Expression.Field(parameterExpression, identifier);
-                    }
-                }
-
-                if (propertyFieldExpression == null)
-                {
-                    throw new Exception($"Could not find field or property '{identifier}'");
-                }
-                else
-                {
-                    propertyFieldCache.TryAdd(identifier, propertyFieldExpression);
-                }
+                throw new Exception($"Could not find field or property '{identifier}'");
             }
 
             return propertyFieldExpression;

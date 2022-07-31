@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using QueryParameters.AspNetCore.Mvc.Parsers;
 using QueryParameters.AspNetCore.Mvc.Settings;
 using QueryParameters.Entities;
 using QueryParameters.Parameters;
@@ -71,62 +72,29 @@ namespace QueryParameters.AspNetCore.Mvc
             return newInstance;
         }
 
-        public static IEnumerable<SortParameter> Sort(HttpRequest httpRequest, SortSettings sortSettings = null)
+        public static SortParameter Sort(HttpRequest httpRequest, SortSettings sortSettings = null)
         {
-            return Sort(httpRequest.Query[SyntaxSettings.SortName], sortSettings: sortSettings);
+            var sortStringVals = httpRequest.Query[SyntaxSettings.SortName];
+
+            if (!sortStringVals.Any()) return null;
+
+            return Sort(sortStringVals.First(), sortSettings: sortSettings);
         }
 
-        public static IEnumerable<SortParameter> Sort(StringValues sort, SortSettings sortSettings = null)
+        public static SortParameter Sort(string sort, SortSettings sortSettings = null)
         {
-            if (sort.Count == 0) return Enumerable.Empty<SortParameter>();
+            if (string.IsNullOrEmpty(sort)) return null;
 
             // Use the default settings if not overridden
             sortSettings ??= SortSettings.Default;
 
-            var sortParameters = new List<SortParameter>();
+            var sortParameter = new SortParameter();
 
-            foreach (var field in sort)
-            {
-                var sortParameter = new SortParameter();
-                sortParameter.Direction = sortSettings.DefaultDirection;
+            ISortParser sortParser = new DefaultSortParser();
 
-                var directionOperatorIndex = field.IndexOf(SyntaxSettings.OperatorDelimiter);
+            sortParameter.Elements.AddRange(sortParser.Parse(sort));
 
-                if (directionOperatorIndex == -1) // There is no operator
-                {
-                    sortParameter.Field = field;
-                }
-                else
-                {
-                    sortParameter.Field = field.Substring(0, directionOperatorIndex);
-
-                    var parsedSortDirection = SortDirection(field.Substring(directionOperatorIndex + 1));
-                    if (parsedSortDirection != null)
-                    {
-                        sortParameter.Direction = parsedSortDirection.Value;
-                    }
-                }
-
-                sortParameters.Add(sortParameter);
-            }
-
-            return sortParameters;
-        }
-
-        public static SortOperator? SortDirection(string sortOperator)
-        {
-            if (sortOperator.Equals(SyntaxSettings.SortAscendingOperator, StringComparison.CurrentCultureIgnoreCase))
-            {
-                return QueryParameters.Entities.SortOperator.Ascending;
-            }
-            else if (sortOperator.Equals(SyntaxSettings.SortDescendingOperator, StringComparison.CurrentCultureIgnoreCase))
-            {
-                return QueryParameters.Entities.SortOperator.Descending;
-            }
-            else
-            {
-                return null;
-            }
+            return sortParameter;
         }
 
     }

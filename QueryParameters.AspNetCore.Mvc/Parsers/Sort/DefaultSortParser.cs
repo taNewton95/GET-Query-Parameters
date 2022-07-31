@@ -1,4 +1,5 @@
-﻿using QueryParameters.Entities;
+﻿using QueryParameters.AspNetCore.Mvc.Settings;
+using QueryParameters.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,49 @@ namespace QueryParameters.AspNetCore.Mvc.Parsers
 
         public SortElementExpression[] Parse(string sort)
         {
-            throw new NotImplementedException();
+            var sortElements = new List<SortElementExpression>();
+            var stringParser = new StringParser(sort);
+
+            IdentifierElement identifierElement = null;
+            SortElementDirection directionElement = null;
+
+            while (stringParser.Next(new HashSet<char>(new[] { ' ', ',' })))
+            {
+                switch (stringParser.MatchedChar)
+                {
+                    case null:
+                    case ',':
+                        if (identifierElement == null)
+                        {
+                            identifierElement = new IdentifierElement(stringParser.CurrentString);
+                        }
+                        else if (directionElement == null)
+                        {
+                            if (stringParser.CurrentString.Equals(SyntaxSettings.SortAscendingOperator, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                directionElement = SortElementDirection.Ascending;
+                            }
+                            else if (stringParser.CurrentString.Equals(SyntaxSettings.SortDescendingOperator, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                directionElement = SortElementDirection.Descending;
+                            }
+                        }
+
+                        sortElements.Add(new SortElementExpression(identifierElement, directionElement ?? SortElementDirection.Ascending));
+                        identifierElement = null;
+                        directionElement = null;
+                        break;
+
+                    case ' ':
+                        if (identifierElement == null)
+                        {
+                            identifierElement = new IdentifierElement(stringParser.CurrentString);
+                        }
+                        break;
+                }
+            }
+
+            return sortElements.Count == 0 ? null : sortElements.ToArray();
         }
 
     }

@@ -1,14 +1,6 @@
 ﻿using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QueryParameters.AspNetCore.Mvc.Settings;
-using QueryParameters.Entities;
-using QueryParameters.Parameters;
-using QueryParameters.Settings;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
 {
@@ -20,100 +12,69 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
         {
             var fieldName = "FieldOnly";
 
-            var sortParams = BasicSortChecks(fieldName);
+            var sortParam = Mvc.SyntaxFactory.Sort(new StringValues(fieldName));
 
-            var firstVal = sortParams.First();
-
-            Assert.AreEqual(fieldName, firstVal.Field);
-            Assert.AreEqual(SortSettings.Default.DefaultDirection, firstVal.Direction);
+            Assert.AreEqual(1, sortParam.Elements.Count());
+            Assert.AreEqual(fieldName, sortParam.Elements.First().Identifier.Identifier);
         }
 
         [TestMethod]
         public void Sort_Ascending()
         {
-            var fieldName = "Ascending";
+            var fieldName = "FieldOnly asc";
 
-            var sortParams = BasicSortChecks(fieldName + SyntaxSettings.OperatorDelimiter + SyntaxSettings.SortAscendingOperator);
+            var sortParam = Mvc.SyntaxFactory.Sort(new StringValues(fieldName));
 
-            var firstVal = sortParams.First();
+            var firstVal = sortParam.Elements.First();
 
-            Assert.AreEqual(fieldName, firstVal.Field);
-            Assert.AreEqual(SortOperator.Ascending, firstVal.Direction);
+            Assert.AreEqual(1, sortParam.Elements.Count());
+            Assert.AreEqual("FieldOnly", firstVal.Identifier.Identifier);
+            Assert.AreEqual(Entities.SortElementDirection.Ascending, firstVal.Direction);
         }
 
         [TestMethod]
         public void Sort_Descending()
         {
-            var fieldName = "Descending";
+            var fieldName = "FieldOnly desc";
 
-            var sortParams = BasicSortChecks(fieldName + SyntaxSettings.OperatorDelimiter + SyntaxSettings.SortDescendingOperator);
+            var sortParam = Mvc.SyntaxFactory.Sort(new StringValues(fieldName));
 
-            var firstVal = sortParams.First();
+            var firstVal = sortParam.Elements.First();
 
-            Assert.AreEqual(fieldName, firstVal.Field);
-            Assert.AreEqual(SortOperator.Descending, firstVal.Direction);
+            Assert.AreEqual(1, sortParam.Elements.Count());
+            Assert.AreEqual("FieldOnly", firstVal.Identifier.Identifier);
+            Assert.AreEqual(Entities.SortElementDirection.Descending, firstVal.Direction);
         }
 
         [TestMethod]
         public void Sort_Multiple()
         {
-            var fieldName = "Descending";
+            var fieldName = "FieldOnly, FieldOnly asc, FieldOnly desc";
 
-            var sortParams = BasicSortChecks(fieldName + SyntaxSettings.OperatorDelimiter + SyntaxSettings.SortDescendingOperator);
+            var sortParam = Mvc.SyntaxFactory.Sort(new StringValues(fieldName));
 
-            var firstVal = sortParams.First();
+            Assert.AreEqual(3, sortParam.Elements.Count());
 
-            Assert.AreEqual(fieldName, firstVal.Field);
-            Assert.AreEqual(SortOperator.Descending, firstVal.Direction);
-        }
+            foreach (var param in sortParam.Elements)
+            {
+                Assert.AreEqual("FieldOnly", param.Identifier.Identifier);
+            }
 
-        private IEnumerable<SortParameter> BasicSortChecks(string input)
-        {
-            var strValues = new StringValues(input);
-
-            var parseResult = QueryParameters.AspNetCore.Mvc.SyntaxFactory.Sort(strValues);
-
-            Assert.AreEqual(strValues.Count, parseResult.Count());
-
-            return parseResult;
-        }
-
-        [TestMethod]
-        public void Sort_OnlyOperator()
-        {
-            var sortParams = BasicSortChecks(SyntaxSettings.OperatorDelimiter + SyntaxSettings.SortDescendingOperator);
-
-            var firstVal = sortParams.First();
-
-            Assert.IsFalse(firstVal.IsPopulated());
-        }
-
-        [TestMethod]
-        public void Sort_ChangeSettings()
-        {
-            var settings = (SortSettings)SortSettings.Default.Clone();
-            settings.DefaultDirection = SortOperator.Descending;
-
-            var strValues = new StringValues("Settings");
-
-            var sortParams = QueryParameters.AspNetCore.Mvc.SyntaxFactory.Sort(strValues, sortSettings: settings);
-
-            var firstVal = sortParams.First();
-
-            Assert.AreEqual(settings.DefaultDirection, firstVal.Direction);
+            Assert.AreEqual(Entities.SortElementDirection.Ascending, sortParam.Elements.ElementAt(0).Direction);
+            Assert.AreEqual(Entities.SortElementDirection.Ascending, sortParam.Elements.ElementAt(1).Direction);
+            Assert.AreEqual(Entities.SortElementDirection.Descending, sortParam.Elements.ElementAt(2).Direction);
         }
 
         [TestMethod]
         public void Sort_InvalidOperator()
         {
-            var fieldName = "Settings";
+            var fieldName = "FieldOnly test";
 
-            var sortParams = BasicSortChecks(fieldName + SyntaxSettings.OperatorDelimiter + "test");
+            var sortParam = Mvc.SyntaxFactory.Sort(new StringValues(fieldName));
 
-            var firstVal = sortParams.First();
-
-            Assert.AreEqual(fieldName, firstVal.Field);
-            Assert.AreEqual(SortSettings.Default.DefaultDirection, firstVal.Direction);
+            Assert.AreEqual(1, sortParam.Elements.Count());
+            Assert.AreEqual("FieldOnly", sortParam.Elements.ElementAt(0).Identifier.Identifier);
+            Assert.AreEqual(Entities.SortElementDirection.Ascending, sortParam.Elements.ElementAt(0).Direction);
         }
 
     }
