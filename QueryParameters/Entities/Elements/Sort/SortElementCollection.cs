@@ -22,5 +22,10 @@ namespace QueryParameters.Entities
             return ChildElements?.GetEnumerator();
         }
 
+        public void Add(SortElementExpression sortElement)
+        {
+            ChildElements.Add(sortElement);
+        }
+
     }
 }

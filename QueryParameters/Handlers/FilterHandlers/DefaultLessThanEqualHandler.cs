@@ -6,14 +6,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QueryParameters
+namespace QueryParameters.Handlers
 {
     internal class DefaultLessThanEqualHandler : IFilterHandler
     {
 
         public Expression GetExpression<T>(FilterElementExpression filterElementExpression, ParameterExpression parameterExpression)
         {
-            var propertyFieldExpression = ((IFilterHandler)this).GetPropertyFieldExpression<T>(filterElementExpression.Identifier.Identifier, parameterExpression);
+            var propertyFieldExpression = ((IHandler)this).GetPropertyFieldExpression<T>(filterElementExpression.Identifier.Identifier, parameterExpression);
             return Expression.LessThanOrEqual(propertyFieldExpression, Expression.Constant(filterElementExpression.Value.Value));
         }
 

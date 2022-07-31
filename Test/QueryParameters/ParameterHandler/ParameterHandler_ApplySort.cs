@@ -19,52 +19,35 @@ namespace QueryParameters.Tests.ParameterHandler
         [TestMethod]
         public void ApplySort_SingleValid()
         {
-            //var data = GetDummyData();
+            var data = GetDummyData();
 
-            //var parameterHandler = new ParameterHandler<DummyClass>();
-            //parameterHandler.Sort = new List<SortParameter>()
-            //{
-            //    new SortParameter()
-            //    {
-            //        Field = nameof(DummyClass.Index1),
-            //        Direction = SortOperator.Descending
-            //    }
-            //};
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Sort = new();
+            parameterHandler.Sort.Elements.Add(new SortElementExpression(new IdentifierElement(nameof(DummyClass.Index1)), SortElementDirection.Descending));
 
-            //var sortResult = parameterHandler.ApplySort(data);
+            var sortResult = parameterHandler.ApplySort(data);
 
-            //Assert.AreEqual(9, sortResult.First().Index1);
+            Assert.AreEqual(9, sortResult.First().Index1);
         }
 
         [TestMethod]
         public void ApplySort_MultipleValid()
         {
-            //var data = GetDummyData();
+            var data = GetDummyData();
 
-            //var parameterHandler = new ParameterHandler<DummyClass>();
-            //parameterHandler.Sort = new List<SortParameter>()
-            //{
-            //    new SortParameter()
-            //    {
-            //        Field = nameof(DummyClass.Index1),
-            //        Direction = SortOperator.Ascending
-            //    },
-            //    new SortParameter()
-            //    {
-            //        Field = nameof(DummyClass.Index2),
-            //        Direction = SortOperator.Descending
-            //    },
-            //    new SortParameter()
-            //    {
-            //        Field = nameof(DummyClass.Index3)
-            //    }
-            //};
+            var parameterHandler = new ParameterHandler<DummyClass>();
 
-            //var sortResult = parameterHandler.ApplySort(data);
+            parameterHandler.Sort = new();
 
-            //Assert.AreEqual(0, sortResult.First().Index1);
-            //Assert.AreEqual(9, sortResult.First().Index2);
-            //Assert.AreEqual(0, sortResult.First().Index3);
+            parameterHandler.Sort.Elements.Add(new SortElementExpression(new IdentifierElement(nameof(DummyClass.Index1)), SortElementDirection.Ascending));
+            parameterHandler.Sort.Elements.Add(new SortElementExpression(new IdentifierElement(nameof(DummyClass.Index2)), SortElementDirection.Descending));
+            parameterHandler.Sort.Elements.Add(new SortElementExpression(new IdentifierElement(nameof(DummyClass.Index3)), SortElementDirection.Ascending));
+
+            var sortResult = parameterHandler.ApplySort(data);
+
+            Assert.AreEqual(0, sortResult.First().Index1);
+            Assert.AreEqual(9, sortResult.First().Index2);
+            Assert.AreEqual(0, sortResult.First().Index3);
         }
 
         private IQueryable<DummyClass> GetDummyData(int recordCount = DefaultDummyDataRecordCount)
@@ -76,7 +59,7 @@ namespace QueryParameters.Tests.ParameterHandler
                 retValues.Add(new DummyClass()
                 {
                     Index1 = i / 100,
-                    Index2 = (i % 100) / 10 ,
+                    Index2 = (i % 100) / 10,
                     Index3 = i % 10,
                 });
             }

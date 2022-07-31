@@ -36,9 +36,13 @@ namespace QueryParameters.Tests.ParameterHandler
 
             parameterHandler.Filter = new FilterParameter();
 
-            var filterIdentifier = new IdentifierElement("Index");
-
-            parameterHandler.Filter.Elements.Add(new FilterElementExpression(filterIdentifier, FilterElementCondition.Equal, new FilterElementValue(5)));
+            parameterHandler.Filter.Elements.BeginScope();
+            parameterHandler.Filter.Elements.Add(new FilterElementExpression(new IdentifierElement("Index3"), FilterElementCondition.Equal, new FilterElementValue(3)));
+            parameterHandler.Filter.Elements.Add(FilterElementOperator.Or);
+            parameterHandler.Filter.Elements.Add(new FilterElementExpression(new IdentifierElement("Index3"), FilterElementCondition.Equal, new FilterElementValue(8)));
+            parameterHandler.Filter.Elements.EndScope();
+            parameterHandler.Filter.Elements.Add(FilterElementOperator.And);
+            parameterHandler.Filter.Elements.Add(new FilterElementExpression(new IdentifierElement("Index2"), FilterElementCondition.Equal, new FilterElementValue(2)));
 
             var paginatedResult = parameterHandler.ApplyFilter(data);
 
@@ -53,7 +57,10 @@ namespace QueryParameters.Tests.ParameterHandler
             {
                 retValues.Add(new DummyClass()
                 {
-                    Index = i
+                    Index = i,
+                    Index2 = i / 10,
+                    Index3 = i % 10,
+                    String = i.ToString(),
                 });
             }
 
@@ -64,6 +71,9 @@ namespace QueryParameters.Tests.ParameterHandler
         {
 
             public int Index;
+            public int Index2;
+            public int Index3;
+            public string String;
 
         }
 

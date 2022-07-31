@@ -1,4 +1,5 @@
 ﻿using QueryParameters.Entities;
+using QueryParameters.Handlers;
 using QueryParameters.Properties;
 using System;
 using System.Collections.Concurrent;

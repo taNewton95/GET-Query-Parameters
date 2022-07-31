@@ -13,10 +13,10 @@ namespace QueryParameters.Entities
         public readonly SortElementOperator Operator;
         public readonly SortElementDirection Direction;
 
-        public SortElementExpression(IdentifierElement identifier, SortElementOperator @operator, SortElementDirection direction)
+        public SortElementExpression(IdentifierElement identifier, SortElementDirection direction, SortElementOperator @operator = null)
         {
             Identifier = identifier;
-            Operator = @operator;
+            Operator = @operator ?? SortElementOperator.Default;
             Direction = direction;
         }
 
