@@ -20,6 +20,9 @@ namespace QueryParameters
         public IFilterHandler LessThanEqualHandler = new DefaultLessThanEqualHandler();
         public IFilterHandler GreaterThanHandler = new DefaultGreaterThanHandler();
         public IFilterHandler GreaterThanEqualHandler = new DefaultGreaterThanEqualHandler();
+        public IFilterHandler StartsHandler = new DefaultStartsHandler();
+        public IFilterHandler EndsHandler = new DefaultEndsHandler();
+        public IFilterHandler ContainsHandler = new DefaultContainsHandler();
 
         public IQueryable<T> ApplyFilter(IQueryable<T> queryable)
         {
@@ -88,6 +91,9 @@ namespace QueryParameters
                 FilterElementCondition.Constant.LessThanEqual => LessThanEqualHandler,
                 FilterElementCondition.Constant.GreaterThan => GreaterThanHandler,
                 FilterElementCondition.Constant.GreaterThanEqual => GreaterThanEqualHandler,
+                FilterElementCondition.Constant.Starts => StartsHandler,
+                FilterElementCondition.Constant.Ends => EndsHandler,
+                FilterElementCondition.Constant.Contains => ContainsHandler,
                 _ => throw new NotSupportedException($"'{filterElementExpression.Condition._Constant}' not supported"),
             };
             return filterHandler.GetExpression<T>(filterElementExpression, parameterExpression);

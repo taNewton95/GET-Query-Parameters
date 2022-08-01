@@ -43,10 +43,7 @@ namespace QueryParameters.AspNetCore.Mvc.Parsers
 
                     LastMatchIndex = IterationIndex;
 
-                    if (!string.IsNullOrEmpty(CurrentString))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 

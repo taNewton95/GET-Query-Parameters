@@ -15,7 +15,14 @@ namespace QueryParameters.Entities
 
         public override string ToString()
         {
-            return Value.ToString();
+            if (Value is string strVal)
+            {
+                return '"' + strVal + '"';
+            }
+            else
+            {
+                return Value.ToString();
+            }
         }
 
     }

@@ -21,10 +21,13 @@ namespace QueryParameters.AspNetCore.Mvc.Parsers
 
             while (stringParser.Next(new HashSet<char>(new[] { ' ', ',' })))
             {
+                if (string.IsNullOrEmpty(stringParser.CurrentString)) continue;
+
                 switch (stringParser.MatchedChar)
                 {
                     case null:
                     case ',':
+
                         if (identifierElement == null)
                         {
                             identifierElement = new IdentifierElement(stringParser.CurrentString);

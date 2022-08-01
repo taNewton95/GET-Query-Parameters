@@ -20,25 +20,32 @@ namespace QueryParameters.AspNetCore.Mvc
             {
                 Pagination = Pagination(httpRequest, paginationSettings: paginationSettings),
                 Sort = Sort(httpRequest, sortSettings: sortSettings),
+                Filter = Filter<T>(httpRequest),
             };
         }
 
-        public static FilterParameter Filter(HttpRequest httpRequest)
+        public static FilterParameter Filter<T>(HttpRequest httpRequest)
         {
-            return Filter(httpRequest.Query);
+            var filterStringVals = httpRequest.Query[SyntaxSettings.FilterName];
+
+            if (!filterStringVals.Any()) return null;
+
+            return Filter<T>(filterStringVals.First());
         }
 
-        public static FilterParameter Filter(IQueryCollection queryCollection)
+        public static FilterParameter Filter<T>(string filter)
         {
             var newInstance = new FilterParameter();
 
-            
+            IFilterParser filterParser = new DefaultFilterParser<T>();
+
+            newInstance.Elements = filterParser.Parse(filter);
 
             return newInstance;
         }
 
         public static PaginationParameter Pagination(HttpRequest httpRequest, PaginationSettings paginationSettings = null)
-        {           
+        {
             return Pagination(httpRequest.Query, paginationSettings: paginationSettings);
         }
 

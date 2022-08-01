@@ -15,14 +15,124 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
     [TestClass]
     public class SyntaxFactory_Filter
     {
+        private const int DefaultDummyDataRecordCount = 100;
+
         [TestMethod]
-        public void Pagination_ValidValues()
+        public void Filter_Equals()
         {
-            var paramDictionary = new Dictionary<string, StringValues>();
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.Index)} {SyntaxSettings.FilterEqual} 10");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
 
-            paramDictionary.Add("filter", "c_name eq '123' and c_id eq 123");
+            Assert.AreEqual(1, result.Count());
+        }
 
-            var parseResult = QueryParameters.AspNetCore.Mvc.SyntaxFactory.Filter(new QueryCollection(paramDictionary));
+        [TestMethod]
+        public void Filter_NotEquals()
+        {
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.Index)} {SyntaxSettings.FilterNotEqual} 10");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
+
+            Assert.AreEqual(99, result.Count());
+        }
+
+        [TestMethod]
+        public void Filter_LessThan()
+        {
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.Index)} {SyntaxSettings.FilterLessThan} 10");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
+
+            Assert.AreEqual(10, result.Count());
+        }
+
+        [TestMethod]
+        public void Filter_LessThanEqual()
+        {
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.Index)} {SyntaxSettings.FilterLessThanEqual} 10");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
+
+            Assert.AreEqual(11, result.Count());
+        }
+
+        [TestMethod]
+        public void Filter_GreaterThan()
+        {
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.Index)} {SyntaxSettings.FilterGreaterThan} 10");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
+
+            Assert.AreEqual(89, result.Count());
+        }
+
+        [TestMethod]
+        public void Filter_GreaterThanEqual()
+        {
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.Index)} {SyntaxSettings.FilterGreaterThanEqual} 10");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
+
+            Assert.AreEqual(90, result.Count());
+        }
+
+        [TestMethod]
+        public void Filter_Starts()
+        {
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.String)} {SyntaxSettings.FilterStarts} '1'");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
+
+            Assert.AreEqual(11, result.Count());
+        }
+
+        [TestMethod]
+        public void Filter_Ends()
+        {
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.String)} {SyntaxSettings.FilterEnds} '1'");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
+
+            Assert.AreEqual(10, result.Count());
+        }
+
+        [TestMethod]
+        public void Filter_Contains()
+        {
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.String)} {SyntaxSettings.FilterContains} '1'");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
+
+            Assert.AreEqual(19, result.Count());
+        }
+
+        private IQueryable<DummyClass> GetDummyData(int recordCount = DefaultDummyDataRecordCount)
+        {
+            var retValues = new List<DummyClass>();
+
+            for (int i = 0; i < recordCount; i++)
+            {
+                retValues.Add(new DummyClass()
+                {
+                    Index = i,
+                    Index2 = i / 10,
+                    Index3 = i % 10,
+                    String = i.ToString(),
+                });
+            }
+
+            return retValues.AsQueryable();
+        }
+
+        private class DummyClass
+        {
+
+            public int Index;
+            public int Index2;
+            public int Index3;
+            public string String;
+
         }
 
     }

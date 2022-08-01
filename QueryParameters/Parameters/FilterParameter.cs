@@ -9,7 +9,7 @@ namespace QueryParameters.Parameters
     public class FilterParameter : BaseParameter
     {
 
-        public readonly FilterElementCollection Elements = new();
+        public FilterElementCollection Elements = new();
 
         public override bool IsPopulated()
         {

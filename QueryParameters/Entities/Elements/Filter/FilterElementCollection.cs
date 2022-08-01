@@ -41,6 +41,16 @@ namespace QueryParameters.Entities
             ChildElements.Add(filterElement);
         }
 
+        public void AddRange(params FilterElement[] filterElements)
+        {
+            AddRange((IEnumerable<FilterElement>)filterElements);
+        }
+
+        public void AddRange(IEnumerable<FilterElement> filterElements)
+        {
+            ChildElements.AddRange(filterElements);
+        }
+
         public void BeginScope()
         {
             var lastElement = ChildElements.LastOrDefault();
