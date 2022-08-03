@@ -107,6 +107,17 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
             Assert.AreEqual(19, result.Count());
         }
 
+        [TestMethod]
+        public void Filter_StringSpace()
+        {
+            var parameterHandler = new ParameterHandler<DummyClass>();
+            parameterHandler.Filter = Mvc.SyntaxFactory.Filter<DummyClass>($"{nameof(DummyClass.String2)} {SyntaxSettings.FilterEqual} 'String '' 10'");
+            var result = parameterHandler.ApplyFilter(GetDummyData());
+
+            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual("String ' 10", result.First().String2);
+        }
+
         private IQueryable<DummyClass> GetDummyData(int recordCount = DefaultDummyDataRecordCount)
         {
             var retValues = new List<DummyClass>();
@@ -119,6 +130,7 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
                     Index2 = i / 10,
                     Index3 = i % 10,
                     String = i.ToString(),
+                    String2 = "String ' " + i,
                 });
             }
 
@@ -132,6 +144,7 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
             public int Index2;
             public int Index3;
             public string String;
+            public string String2;
 
         }
 

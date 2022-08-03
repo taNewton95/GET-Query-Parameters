@@ -3,7 +3,8 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<VersionPrefix>0.0.4</VersionPrefix>
+		<VersionPrefix>0.0.5</VersionPrefix>
+		<PackageVersion>$(VersionPrefix)-alpha</PackageVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

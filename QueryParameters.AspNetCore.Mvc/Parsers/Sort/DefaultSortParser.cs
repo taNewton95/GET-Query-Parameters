@@ -23,7 +23,7 @@ namespace QueryParameters.AspNetCore.Mvc.Parsers
             {
                 if (string.IsNullOrEmpty(stringParser.CurrentString)) continue;
 
-                switch (stringParser.MatchedChar)
+                switch (stringParser.MatchedDelimiter)
                 {
                     case null:
                     case ',':
