@@ -64,13 +64,13 @@ The query parameter strings can be customised at runtime, by overriding the stat
 | Name    | Query parameter string | Setting Name | Default |
 | ------- | ---------------------- | ------------ | ------- |
 | Default |                        |              | ✔       |
-| Length  | `len`                  |              | ✗       |
+| Length  | `len`                  |              | ✘       |
 
 ### Sort Direction
 | Name       | Query parameter string | Setting Name     | Default |
 | ---------- | ---------------------- | ---------------- | ------- |
 | Ascending  | `asc`                  | `SortAscending`  | ✔       |
-| Descending | `desc`                 | `SortDescending` | ✗       |
+| Descending | `desc`                 | `SortDescending` | ✘       |
 
 ## Pagination
 ### Take
