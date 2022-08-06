@@ -60,7 +60,7 @@ namespace QueryParameters.AspNetCore.Mvc.Parsers
                 {
                     if (!SyntaxSettings.FilterElementOperatorDictionary.TryGetValue(stringParser.CurrentString, out var operatorElement))
                     {
-                        throw new UnknownConditionException($"Unknown operator '{stringParser.CurrentString}'", stringParser.CurrentString);
+                        throw new UnknownOperatorException($"Unknown operator '{stringParser.CurrentString}'", stringParser.CurrentString);
                     }
 
                     filterCollection.Add(operatorElement);

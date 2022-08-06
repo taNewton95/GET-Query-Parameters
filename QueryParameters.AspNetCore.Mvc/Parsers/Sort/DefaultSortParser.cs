@@ -34,11 +34,11 @@ namespace QueryParameters.AspNetCore.Mvc.Parsers
                         }
                         else if (directionElement == null)
                         {
-                            if (stringParser.CurrentString.Equals(SyntaxSettings.SortAscendingOperator, StringComparison.CurrentCultureIgnoreCase))
+                            if (stringParser.CurrentString.Equals(SyntaxSettings.SortAscending, StringComparison.CurrentCultureIgnoreCase))
                             {
                                 directionElement = SortElementDirection.Ascending;
                             }
-                            else if (stringParser.CurrentString.Equals(SyntaxSettings.SortDescendingOperator, StringComparison.CurrentCultureIgnoreCase))
+                            else if (stringParser.CurrentString.Equals(SyntaxSettings.SortDescending, StringComparison.CurrentCultureIgnoreCase))
                             {
                                 directionElement = SortElementDirection.Descending;
                             }

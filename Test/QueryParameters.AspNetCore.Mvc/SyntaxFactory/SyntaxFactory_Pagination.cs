@@ -26,12 +26,12 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
 
             if (!string.IsNullOrEmpty(take))
             {
-                paramDictionary.Add(SyntaxSettings.PaginationTakeName, take);
+                paramDictionary.Add(SyntaxSettings.Take, take);
             }
 
             if (!string.IsNullOrEmpty(skip))
             {
-                paramDictionary.Add(SyntaxSettings.PaginationSkipName, skip);
+                paramDictionary.Add(SyntaxSettings.Skip, skip);
             }
 
             var parseResult = QueryParameters.AspNetCore.Mvc.SyntaxFactory.Pagination(new QueryCollection(paramDictionary));
@@ -62,8 +62,8 @@ namespace QueryParameters.AspNetCore.Mvc.Tests.SyntaxFactory
         {
             var paramDictionary = new Dictionary<string, StringValues>()
             {
-                { SyntaxSettings.PaginationTakeName, new StringValues("test") },
-                { SyntaxSettings.PaginationSkipName, new StringValues("test") }
+                { SyntaxSettings.Take, new StringValues("test") },
+                { SyntaxSettings.Skip, new StringValues("test") }
             };
 
             var parseResult = QueryParameters.AspNetCore.Mvc.SyntaxFactory.Pagination(new QueryCollection(paramDictionary));

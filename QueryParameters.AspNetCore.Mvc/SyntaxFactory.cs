@@ -26,7 +26,7 @@ namespace QueryParameters.AspNetCore.Mvc
 
         public static FilterParameter Filter<T>(HttpRequest httpRequest)
         {
-            var filterStringVals = httpRequest.Query[SyntaxSettings.FilterName];
+            var filterStringVals = httpRequest.Query[SyntaxSettings.Filter];
 
             if (!filterStringVals.Any()) return null;
 
@@ -58,7 +58,7 @@ namespace QueryParameters.AspNetCore.Mvc
             newInstance.Skip = paginationSettings.DefaultSkip;
             newInstance.Take = paginationSettings.DefaultTake;
 
-            var skip = queryCollection[SyntaxSettings.PaginationSkipName];
+            var skip = queryCollection[SyntaxSettings.Skip];
             if (skip.Count > 0)
             {
                 if (!int.TryParse(skip[0], out newInstance.Skip))
@@ -67,7 +67,7 @@ namespace QueryParameters.AspNetCore.Mvc
                 }
             }
 
-            var take = queryCollection[SyntaxSettings.PaginationTakeName];
+            var take = queryCollection[SyntaxSettings.Take];
             if (take.Count > 0)
             {
                 if (!int.TryParse(take[0], out newInstance.Take))
@@ -81,7 +81,7 @@ namespace QueryParameters.AspNetCore.Mvc
 
         public static SortParameter Sort(HttpRequest httpRequest, SortSettings sortSettings = null)
         {
-            var sortStringVals = httpRequest.Query[SyntaxSettings.SortName];
+            var sortStringVals = httpRequest.Query[SyntaxSettings.Sort];
 
             if (!sortStringVals.Any()) return null;
 

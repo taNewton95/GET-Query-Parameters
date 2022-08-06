@@ -35,7 +35,7 @@ namespace QueryParameters.AspNetCore.Mvc.Settings
         }
 
         #region "Filter"
-        public static string FilterName = "filter";
+        public static string Filter = "filter";
 
         private static string filterEqual = "eq";
         public static string FilterEqual
@@ -161,14 +161,14 @@ namespace QueryParameters.AspNetCore.Mvc.Settings
         #endregion
 
         #region "Pagination"
-        public static string PaginationTakeName = "take";
-        public static string PaginationSkipName = "skip";
+        public static string Take = "take";
+        public static string Skip = "skip";
         #endregion
 
         #region "Sort"
-        public static string SortName = "sort";
-        public static string SortAscendingOperator = "asc";
-        public static string SortDescendingOperator = "desc";
+        public static string Sort = "sort";
+        public static string SortAscending = "asc";
+        public static string SortDescending = "desc";
         #endregion
 
         private static void PopulateFilterElementConditionDictionary()
